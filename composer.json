@@ -1,0 +1,38 @@
+{
+    "name": "lmh/allinpay",
+    "description": "通联支付SDK",
+    "authors": [
+        {
+            "name": "lmh",
+            "email": "lmh@weiyian.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "psr/log": "^1.0",
+        "monolog/monolog": "^1.25.5",
+        "pimple/pimple": "^3.0",
+        "guzzlehttp/guzzle": "^6.5",
+        "ext-openssl": "*",
+        "ext-mbstring": "*",
+        "ext-libxml": "*",
+        "ext-fileinfo": "*",
+        "ext-simplexml": "*",
+        "illuminate/support": "^5.8",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lmh\\AllinPay\\": "src"
+        },
+        "files": []
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    }
+}
