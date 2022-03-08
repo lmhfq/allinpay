@@ -279,7 +279,10 @@ class TradeRequest extends BaseRequest
             'front_url' => $this->getFrontUrl(),
             'notify_url' => $this->getNotifyUrl(),
         ];
-        if ($this->getAcct()){
+        if ($this->getSubAppid()) {
+            $data['sub_appid'] = $this->getSubAppid();
+        }
+        if ($this->getAcct()) {
             $data['acct'] = $this->getAcct();
         }
         if ($this->getAsinfo()) {
