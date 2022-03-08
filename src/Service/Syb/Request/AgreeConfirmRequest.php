@@ -64,6 +64,10 @@ class AgreeConfirmRequest extends BaseRequest
      * @var string 短信验证码
      */
     protected $smsCode;
+    /**
+     * @var string 签约申请时返回,如果不为空,则原样带上
+     */
+    protected $thpinfo;
 
     /**
      * @return mixed
@@ -225,6 +229,22 @@ class AgreeConfirmRequest extends BaseRequest
         $this->smsCode = $smsCode;
     }
 
+    /**
+     * @return string
+     */
+    public function getThpinfo(): string
+    {
+        return $this->thpinfo ?: '';
+    }
+
+    /**
+     * @param string $thpinfo
+     */
+    public function setThpinfo(string $thpinfo): void
+    {
+        $this->thpinfo = $thpinfo;
+    }
+
 
     public function getApiParams(): array
     {
@@ -238,6 +258,9 @@ class AgreeConfirmRequest extends BaseRequest
             'mobile' => $this->getMobile(),
             'smscode' => $this->getSmsCode(),
         ];
+        if ($this->getThpinfo()) {
+            $data['thpinfo'] = $this->getThpinfo();
+        }
         if ($this->getAcctType() != '00') {
             $data['validdate'] = $this->getValidDate();
             $data['cvv2'] = $this->getCvv2();

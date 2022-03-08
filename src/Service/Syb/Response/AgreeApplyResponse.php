@@ -12,5 +12,24 @@ namespace Lmh\AllinPay\Service\Syb\Response;
 
 class AgreeApplyResponse extends BaseResponse
 {
+    protected $thpinfo;
 
+    /**
+     * @return mixed
+     */
+    public function getThpinfo()
+    {
+        return $this->thpinfo ?: '';
+    }
+
+
+    /**
+     * @param string $message
+     * @author lmh
+     */
+    public function handle(string $message)
+    {
+        parent::handle($message);
+        $this->thpinfo = $this->responseData['thpinfo'] ?? '';
+    }
 }
