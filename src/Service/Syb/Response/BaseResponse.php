@@ -23,10 +23,6 @@ class BaseResponse
     /**
      * @var string
      */
-    protected $cusid;
-    /**
-     * @var string
-     */
     protected $responsePlainText;
     /**
      * @var array
@@ -36,6 +32,10 @@ class BaseResponse
      * @var string 交易的状态
      */
     protected $trxStatus;
+    /**
+     * @var string 错误信息
+     */
+    protected $errMsg;
 
     /**
      * @return string
@@ -65,5 +65,6 @@ class BaseResponse
         $this->retMsg = $result['retmsg'] ?? '';
         $this->responseData = $result;
         $this->trxStatus = $this->responseData['trxstatus'] ?? '';
+        $this->errMsg = $this->responseData['errmsg'] ?? '';
     }
 }

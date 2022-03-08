@@ -41,6 +41,7 @@ class Application extends ServiceContainer
         $sysParams["randomstr"] = self::random();
         $apiParams = $request->getApiParams();
         $params = array_merge($sysParams, $apiParams);
+
         SignatureFactory::setSigner(new RSASigner(
             $this->offsetGet("config")['keystoreFilename'],
             $this->offsetGet("config")['keystorePassword'],
@@ -54,7 +55,7 @@ class Application extends ServiceContainer
 
         $logger = $this->offsetGet("config")['logger'] ?? null;
         if ($logger instanceof LoggerInterface && $this->offsetGet("config")['debug']) {
-            $logger->debug("请求原文：", $params);
+            $logger->debug("请求原文：" . $request->getUri(), $params);
         }
         $response->handle($result);
         if ($logger instanceof LoggerInterface && $this->offsetGet("config")['debug']) {
