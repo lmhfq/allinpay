@@ -20,4 +20,8 @@ class PayType
      * 微信JS支付
      */
     public const W02 = 'W02';
+    /**
+     * 微信小程序支付
+     */
+    public const W06 = 'W06';
 }

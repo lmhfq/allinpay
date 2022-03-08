@@ -221,7 +221,7 @@ class TradeRequest extends BaseRequest
      */
     public function getSubAppid(): string
     {
-        return $this->subAppid;
+        return $this->subAppid ?: '';
     }
 
     /**

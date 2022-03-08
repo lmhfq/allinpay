@@ -23,12 +23,10 @@ class StrUtil
     public static function getSignText(array $params): string
     {
         unset($params['sign']);
-
         ksort($params);
-
-//        $params = array_filter($params, function ($v) {
-//            return $v != '';
-//        }, ARRAY_FILTER_USE_BOTH);
+        $params = array_filter($params, function ($v) {
+            return $v != '';
+        }, ARRAY_FILTER_USE_BOTH);
         return urldecode(http_build_query($params));
     }
 }

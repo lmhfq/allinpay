@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Service\Syb;
 
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Lmh\AllinPay\Service\Syb\Request\BaseRequest;
@@ -92,8 +93,9 @@ class Application extends ServiceContainer
      * @param int $length
      * @param string $charList
      * @return string
+     * @throws Exception
      */
-    public static function random(int $length = 16, string $charList = '0-9a-z'): string
+    protected static function random(int $length = 16, string $charList = '0-9a-z'): string
     {
         $charList = count_chars(preg_replace_callback('#.-.#', function (array $m): string {
             return implode('', range($m[0][0], $m[0][2]));
@@ -104,5 +106,30 @@ class Application extends ServiceContainer
             $res .= $charList[random_int(0, $chLen - 1)];
         }
         return $res;
+    }
+
+    /**
+     * 处理回调
+     * @param array $message
+     * @param string $signature
+     * @return bool
+     * @throws Exception
+     */
+    public function notify(array $message, string $signature): bool
+    {
+        SignatureFactory::setSigner(new RSASigner(
+            $this->offsetGet("config")['keystoreFilename'],
+            $this->offsetGet("config")['keystorePassword'],
+            $this->offsetGet("config")['keyContent'],
+            $this->offsetGet("config")['certificateFilename'],
+            $this->offsetGet("config")['certContent'],
+            $this->offsetGet("config")['platformCertContent']
+        ));
+        $plainText = StrUtil::getSignText($message);
+        $result = SignatureFactory::getSigner()->verify($plainText, $signature);
+        if ($result != 1) {
+            throw new Exception("验证签名失败");
+        }
+        return true;
     }
 }
