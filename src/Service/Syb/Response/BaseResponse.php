@@ -54,6 +54,38 @@ class BaseResponse
     }
 
     /**
+     * @return string
+     */
+    public function getRetCode(): string
+    {
+        return $this->retCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRetMsg(): string
+    {
+        return $this->retMsg;
+    }
+
+    /**
+     * @return array
+     */
+    public function getResponseData(): array
+    {
+        return $this->responseData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrMsg(): string
+    {
+        return $this->errMsg;
+    }
+
+    /**
      * @param string $message
      * @author lmh
      */
