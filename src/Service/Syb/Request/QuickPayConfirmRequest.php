@@ -86,7 +86,7 @@ class QuickPayConfirmRequest extends BaseRequest
      */
     public function getThpinfo(): string
     {
-        return $this->thpinfo;
+        return $this->thpinfo ?: '';
     }
 
     /**

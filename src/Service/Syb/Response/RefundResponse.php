@@ -12,5 +12,23 @@ namespace Lmh\AllinPay\Service\Syb\Response;
 
 class RefundResponse extends BaseResponse
 {
+    protected $trxId;
 
+    /**
+     * @return mixed
+     */
+    public function getTrxId()
+    {
+        return $this->trxId;
+    }
+
+    /**
+     * @param string $message
+     * @author lmh
+     */
+    public function handle(string $message)
+    {
+        parent::handle($message);
+        $this->trxId = $this->responseData['trxid'] ?? '';
+    }
 }

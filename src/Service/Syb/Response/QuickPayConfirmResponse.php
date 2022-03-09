@@ -12,5 +12,26 @@ namespace Lmh\AllinPay\Service\Syb\Response;
 
 class QuickPayConfirmResponse extends BaseResponse
 {
+    /**
+     * @var string 平台的交易流水号
+     */
+    protected $trxId;
 
+    /**
+     * @return string
+     */
+    public function getTrxId(): string
+    {
+        return $this->trxId;
+    }
+
+    /**
+     * @param string $message
+     * @author lmh
+     */
+    public function handle(string $message)
+    {
+        parent::handle($message);
+        $this->trxId = $this->responseData['trxid'] ?? '';
+    }
 }
