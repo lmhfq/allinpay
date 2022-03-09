@@ -25,7 +25,7 @@ class StrUtil
         unset($params['sign']);
         ksort($params);
         $params = array_filter($params, function ($v) {
-            return $v != '';
+            return $v !== '';
         }, ARRAY_FILTER_USE_BOTH);
         return urldecode(http_build_query($params));
     }
