@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Service\Syb\Response;
 
 
+use Illuminate\Support\Arr;
+
 class AgreeConfirmResponse extends BaseResponse
 {
     protected $agreeId;
@@ -47,8 +49,8 @@ class AgreeConfirmResponse extends BaseResponse
     public function handle(string $message)
     {
         parent::handle($message);
-        $this->agreeId = $this->responseData['agreeid'] ?? '';
-        $this->bankCode = $this->responseData['bankcode'] ?? '';
-        $this->bankName = $this->responseData['bankname'] ?? '';
+        $this->agreeId = Arr::get($this->responseData, 'agreeid', '');
+        $this->bankCode = Arr::get($this->responseData, 'bankcode', '');
+        $this->bankName = Arr::get($this->responseData, 'bankname', '');
     }
 }

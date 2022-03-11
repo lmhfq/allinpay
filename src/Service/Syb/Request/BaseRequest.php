@@ -24,6 +24,14 @@ abstract class BaseRequest
      * @var string
      */
     protected $uri = '';
+    /**
+     * @var string
+     */
+    protected $appId;
+    /**
+     * @var string
+     */
+    protected $cusId;
 
     /**
      * @return string
@@ -55,6 +63,38 @@ abstract class BaseRequest
     public function setSignType(string $signType): void
     {
         $this->signType = $signType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppId(): string
+    {
+        return $this->appId;
+    }
+
+    /**
+     * @param string $appId
+     */
+    public function setAppId(string $appId): void
+    {
+        $this->appId = $appId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCusId(): string
+    {
+        return $this->cusId;
+    }
+
+    /**
+     * @param string $cusId
+     */
+    public function setCusId(string $cusId): void
+    {
+        $this->cusId = $cusId;
     }
 
     /**

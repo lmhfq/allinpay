@@ -10,12 +10,14 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Service\Syb\Response;
 
 
+use Illuminate\Support\Arr;
+
 class QuickPayTradeResponse extends BaseResponse
 {
     /**
      * @var string 交易透传信息
      */
-    protected $thpinfo;
+    protected $thpInfo;
     /**
      * @var string 平台的交易流水号
      */
@@ -36,12 +38,12 @@ class QuickPayTradeResponse extends BaseResponse
 
     /**
      * @return string
-     * @author lmh
      */
-    public function getThpinfo(): string
+    public function getThpInfo(): string
     {
-        return $this->thpinfo;
+        return $this->thpInfo;
     }
+
 
     /**
      * @return string
@@ -58,8 +60,8 @@ class QuickPayTradeResponse extends BaseResponse
     public function handle(string $message)
     {
         parent::handle($message);
-        $this->thpinfo = $this->responseData['thpinfo'] ?? '';
-        $this->trxId = $this->responseData['trxid'] ?? '';
-        $this->reqSn = $this->responseData['reqsn'] ?? '';
+        $this->thpInfo = Arr::get($this->responseData, 'thpinfo', '');
+        $this->trxId = Arr::get($this->responseData, 'trxid', '');
+        $this->reqSn = Arr::get($this->responseData, 'reqsn', '');
     }
 }

@@ -32,11 +32,14 @@ class Application extends ServiceContainer
      */
     public function execute(BaseRequest $request, BaseResponse $response): BaseResponse
     {
-        $sysParams["cusid"] = $this->offsetGet("config")['cusid'];
-        if (isset($this->offsetGet("config")['orgid']) && $this->offsetGet("config")['orgid']) {
-            $sysParams['orgid'] = $this->offsetGet("config")['orgid'] ?? '';
+
+        $request->setAppId($this->offsetGet("config")['appId']);
+        $request->setCusId($this->offsetGet("config")['cusId']);
+        if (isset($this->offsetGet("config")['orgId']) && $this->offsetGet("config")['orgId']) {
+            $sysParams['orgid'] = $this->offsetGet("config")['orgId'] ?? '';
         }
-        $sysParams["appid"] = $this->offsetGet("config")['appid'];
+        $sysParams["cusid"] = $request->getCusId();
+        $sysParams["appid"] = $request->getAppId();
         $sysParams["version"] = $request->getVersion();
         $sysParams["signtype"] = $request->getSignType();
         $sysParams["randomstr"] = self::random();
@@ -53,7 +56,6 @@ class Application extends ServiceContainer
         $requestPlainText = StrUtil::getSignText($params);
         $params['sign'] = SignatureFactory::getSigner()->sign($requestPlainText);
         $result = $this->request($request, $params);
-
         $logger = $this->offsetGet("config")['logger'] ?? null;
         if ($logger instanceof LoggerInterface && $this->offsetGet("config")['debug']) {
             $logger->debug("请求原文：" . $request->getUri(), $params);
@@ -77,7 +79,7 @@ class Application extends ServiceContainer
         $client = new Client($this->offsetGet("config")['http']);
         $options = [
             'headers' => [
-                'Accept' => 'text/xml; charset=UTF8',
+                'Accept' => 'text/plain; charset=UTF8',
             ],
             'form_params' => $params,
             'verify' => false

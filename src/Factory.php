@@ -11,14 +11,14 @@ namespace Lmh\AllinPay;
 
 
 use Illuminate\Support\Str;
-use Lmh\AllinPay\Service\Syb\Application;
 
 /**
  * Class Factory
  * @package Lmh\Payeco
  * User: lmh <lmh@weiyian.com>
  * Date: 2022/3/07
- * @method static Application    syb(array $config)
+ * @method static Service\Syb\Application    syb(array $config)
+ * @method static Service\Customs\Application    customs(array $config)
  */
 class Factory
 {

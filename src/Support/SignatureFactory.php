@@ -8,14 +8,14 @@ namespace Lmh\AllinPay\Support;
 class SignatureFactory
 {
     /**
-     * @var RSASigner
+     * @var AbstractSigner
      */
     private static $signer;
 
     /**
-     * @return RSASigner
+     * @return AbstractSigner
      */
-    public static function getSigner(): ?RSASigner
+    public static function getSigner(): ?AbstractSigner
     {
         return self::$signer;
     }
@@ -23,7 +23,7 @@ class SignatureFactory
     /**
      * @param mixed $signer
      */
-    public static function setSigner(RSASigner $signer): void
+    public static function setSigner(AbstractSigner $signer): void
     {
         self::$signer = $signer;
     }

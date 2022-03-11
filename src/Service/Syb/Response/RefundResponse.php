@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Service\Syb\Response;
 
 
+use Illuminate\Support\Arr;
+
 class RefundResponse extends BaseResponse
 {
     protected $trxId;
@@ -29,6 +31,6 @@ class RefundResponse extends BaseResponse
     public function handle(string $message)
     {
         parent::handle($message);
-        $this->trxId = $this->responseData['trxid'] ?? '';
+        $this->trxId = Arr::get($this->responseData, 'trxid', '');
     }
 }

@@ -10,16 +10,18 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Service\Syb\Response;
 
 
+use Illuminate\Support\Arr;
+
 class AgreeApplyResponse extends BaseResponse
 {
-    protected $thpinfo;
+    protected $thpInfo;
 
     /**
      * @return mixed
      */
-    public function getThpinfo()
+    public function getThpInfo()
     {
-        return $this->thpinfo ?: '';
+        return $this->thpInfo;
     }
 
 
@@ -30,6 +32,6 @@ class AgreeApplyResponse extends BaseResponse
     public function handle(string $message)
     {
         parent::handle($message);
-        $this->thpinfo = $this->responseData['thpinfo'] ?? '';
+        $this->thpInfo = Arr::get($this->responseData, 'thpinfo', '');
     }
 }

@@ -12,7 +12,7 @@ namespace Lmh\AllinPay\Support;
 
 use Exception;
 
-class RSASigner
+class RSASigner extends AbstractSigner
 {
     /**
      * @var string 商户私钥内容
@@ -57,6 +57,7 @@ class RSASigner
     /**
      * 生成签名
      * @param string $plainText
+     * @param int $algorithm
      * @return string
      * @throws Exception
      */
@@ -80,6 +81,7 @@ class RSASigner
      * 验证签名
      * @param string $plainText
      * @param string $signature
+     * @param int $algorithm
      * @return int
      * @throws Exception
      */
@@ -95,47 +97,5 @@ class RSASigner
                 "\n-----END PUBLIC KEY-----";
         }
         return openssl_verify($plainText, $signature, $this->platformCertContent, $algorithm);
-    }
-
-    /**
-     * 公钥加密
-     * @param $data
-     * @return string
-     * @throws Exception
-     * @author lmh
-     */
-    public function encrypt($data): string
-    {
-        $encrypted = '';
-        if (!$this->platformCertContent) {
-            throw new Exception('平台证书配置错误');
-        }
-        if (strpos($this->platformCertContent, '-----') === false) {
-            $this->platformCertContent = "-----BEGIN PUBLIC KEY-----\n" .
-                wordwrap($this->platformCertContent, 64, "\n", true) .
-                "\n-----END PUBLIC KEY-----";
-
-        }
-
-        openssl_public_encrypt($data, $encrypted, $this->platformCertContent, OPENSSL_PKCS1_PADDING);
-        return base64_encode($encrypted);
-    }
-
-    /**
-     * 私钥解密
-     * @param $data
-     * @return string
-     * @throws Exception
-     * @author lmh
-     */
-    public function decrypt($data): string
-    {
-        $decrypted = '';
-        $data = base64_decode($data);
-        if (!$this->keyContent) {
-            throw new Exception('签名证书配置错误');
-        }
-        openssl_private_decrypt($data, $decrypted, $this->keyContent, OPENSSL_PKCS1_PADDING);
-        return $decrypted;
     }
 }

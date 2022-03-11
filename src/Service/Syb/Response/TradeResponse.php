@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Service\Syb\Response;
 
 
+use Illuminate\Support\Arr;
+
 class TradeResponse extends BaseResponse
 {
     protected $trxId;
@@ -71,9 +73,9 @@ class TradeResponse extends BaseResponse
     public function handle(string $message)
     {
         parent::handle($message);
-        $this->trxId = $this->responseData['trxid'] ?? '';
-        $this->reqSn = $this->responseData['reqsn'] ?? '';
-        $this->chnlTrxId = $this->responseData['chnltrxid'] ?? '';
-        $this->payInfo = $this->responseData['payinfo'] ?? '';
+        $this->trxId = Arr::get($this->responseData, 'trxid', '');
+        $this->reqSn = Arr::get($this->responseData, 'reqsn', '');
+        $this->chnlTrxId = Arr::get($this->responseData, 'chnltrxid', '');
+        $this->payInfo = Arr::get($this->responseData, 'payinfo', '');
     }
 }

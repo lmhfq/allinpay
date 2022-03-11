@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Lmh\AllinPay\Service\Syb\Response;
 
+use Illuminate\Support\Arr;
+
 class BaseResponse
 {
     /**
@@ -92,11 +94,11 @@ class BaseResponse
     public function handle(string $message)
     {
         $this->responsePlainText = $message;
-        $result = json_decode($message, true);
-        $this->retCode = $result['retcode'] ?? '';
-        $this->retMsg = $result['retmsg'] ?? '';
-        $this->responseData = $result;
-        $this->trxStatus = $this->responseData['trxstatus'] ?? '';
-        $this->errMsg = $this->responseData['errmsg'] ?? '';
+        $this->responseData = json_decode($message, true);
+        $this->retCode = Arr::get($this->responseData, 'retcode', '');
+        $this->retMsg = Arr::get($this->responseData, 'retmsg', '');
+
+        $this->trxStatus = Arr::get($this->responseData, 'trxstatus', '');
+        $this->errMsg = Arr::get($this->responseData, 'errmsg', '');
     }
 }
