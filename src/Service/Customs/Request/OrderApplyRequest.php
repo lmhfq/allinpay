@@ -11,6 +11,7 @@ namespace Lmh\AllinPay\Service\Customs\Request;
 
 
 use Exception;
+use Lmh\AllinPay\Constant\CustomsCode;
 
 class OrderApplyRequest extends BaseRequest
 {
@@ -48,6 +49,15 @@ class OrderApplyRequest extends BaseRequest
      */
     protected $currency = '156';
     /**
+     * @var string 海关分配的电商平台代码
+     * 海关分配的电商平台代码（注意：广州海关与其他关不同,请使用C开头的10位编码）
+     */
+    protected $eshopEntCode;
+    /**
+     * @var string 海关分配的电商平台名称
+     */
+    protected $eshopEntName;
+    /**
      * @var string 支付人姓名
      */
     protected $payerName;
@@ -63,13 +73,33 @@ class OrderApplyRequest extends BaseRequest
      * @var string 支付人手机号
      */
     protected $paperPhone;
+    /**
+     * @var string 备注
+     */
+    protected $memo;
+    /**
+     * @var string 主支付流水号
+     */
+    protected $mainPaymentOrderNo;
+    /**
+     * @var int 商品货款金额 杭州必填
+     */
+    protected $goodsFee;
+    /**
+     * @var int 税款金额 杭州必填
+     */
+    protected $taxFee;
+    /**
+     * @var int 运费 杭州必填
+     */
+    protected $freightFee;
 
     /**
      * @return string
      */
     public function getCustomsCode(): string
     {
-        return $this->customsCode;
+        return $this->customsCode ?: '';
     }
 
     /**
@@ -192,6 +222,38 @@ class OrderApplyRequest extends BaseRequest
         $this->currency = $currency;
     }
 
+    /**
+     * @return string
+     */
+    public function getEshopEntCode(): string
+    {
+        return $this->eshopEntCode;
+    }
+
+    /**
+     * @param string $eshopEntCode
+     */
+    public function setEshopEntCode(string $eshopEntCode): void
+    {
+        $this->eshopEntCode = $eshopEntCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEshopEntName(): string
+    {
+        return $this->eshopEntName;
+    }
+
+    /**
+     * @param string $eshopEntName
+     */
+    public function setEshopEntName(string $eshopEntName): void
+    {
+        $this->eshopEntName = $eshopEntName;
+    }
+
 
     /**
      * @return string
@@ -258,6 +320,87 @@ class OrderApplyRequest extends BaseRequest
     }
 
     /**
+     * @return string
+     */
+    public function getMemo(): string
+    {
+        return $this->memo ?: '';
+    }
+
+    /**
+     * @param string $memo
+     */
+    public function setMemo(string $memo): void
+    {
+        $this->memo = $memo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMainPaymentOrderNo(): string
+    {
+        return $this->mainPaymentOrderNo ?: '';
+    }
+
+    /**
+     * @param string $mainPaymentOrderNo
+     */
+    public function setMainPaymentOrderNo(string $mainPaymentOrderNo): void
+    {
+        $this->mainPaymentOrderNo = $mainPaymentOrderNo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGoodsFee(): int
+    {
+        return $this->goodsFee;
+    }
+
+    /**
+     * @param int $goodsFee
+     */
+    public function setGoodsFee(int $goodsFee): void
+    {
+        $this->goodsFee = $goodsFee;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTaxFee(): int
+    {
+        return $this->taxFee;
+    }
+
+    /**
+     * @param int $taxFee
+     */
+    public function setTaxFee(int $taxFee): void
+    {
+        $this->taxFee = $taxFee;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFreightFee(): int
+    {
+        return $this->freightFee;
+    }
+
+    /**
+     * @param int $freightFee
+     */
+    public function setFreightFee(int $freightFee): void
+    {
+        $this->freightFee = $freightFee;
+    }
+
+
+    /**
      * @throws Exception
      * @author lmh
      */
@@ -265,6 +408,7 @@ class OrderApplyRequest extends BaseRequest
     {
         $data = [];
         $head = parent::getHead();
+        $head['VISITOR_ID'] = $this->getVisitorId();
         $data = array_merge($data, $head);
         $body = [
             'CUSTOMS_CODE' => $this->getCustomsCode(),
@@ -275,11 +419,20 @@ class OrderApplyRequest extends BaseRequest
             'PAYMENT_ORDER_NO' => $this->getPaymentOrderNo(),
             'PAYMENT_AMOUNT' => $this->getPaymentAmount(),
             'CURRENCY' => $this->getCurrency(),
+            'ESHOP_ENT_CODE' => $this->getEshopEntCode(),
+            'ESHOP_ENT_NAME' => $this->getEshopEntName(),
             'PAYER_NAME' => $this->getPayerName(),
             'PAPER_TYPE' => $this->getPaperType(),
             'PAPER_NUMBER' => $this->getPaperNumber(),
-            'PAPER_PHONE' => $this->getPaperPhone()
+            'PAPER_PHONE' => $this->getPaperPhone(),
+            'MEMO' => $this->getMemo(),
+            'MAIN_PAYMENT_ORDER_NO' => $this->getMainPaymentOrderNo(),
         ];
+        if ($this->getCustomsCode() == CustomsCode::HG021) {
+            $body['GOODS_FEE'] = $this->getGoodsFee();
+            $body['TAX_FEE'] = $this->getTaxFee();
+            $body['FREIGHT_FEE'] = $this->getFreightFee();
+        }
         $data = array_merge($data, [
             'BODY' => $body
         ]);

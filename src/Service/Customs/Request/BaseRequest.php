@@ -41,7 +41,7 @@ abstract class BaseRequest
      */
     protected $visitorId = 'MCT';
     /**
-     * @var string
+     * @var string 报关用的商户号
      */
     protected $mchtId;
     /**
@@ -201,7 +201,6 @@ abstract class BaseRequest
         return [
             'HEAD' => [
                 'VERSION' => $this->getVersion(),
-                'VISITOR_ID' => $this->getVisitorId(),
                 'MCHT_ID' => $this->getMchtId(),
                 'ORDER_NO' => $this->getOrderNo(),
                 'TRANS_DATETIME' => $this->getTransDatetime(),

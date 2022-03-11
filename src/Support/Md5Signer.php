@@ -28,10 +28,9 @@ class Md5Signer extends AbstractSigner
         $this->appKey = $appKey;
     }
 
-
     public function sign(string $plainText): string
     {
-        return strtoupper(md5($plainText.'<key>'.$this->appKey.'</key>'));
+        return strtoupper(md5($plainText . '<key>' . $this->appKey . '</key>'));
     }
 
 
