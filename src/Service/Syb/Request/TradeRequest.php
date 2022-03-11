@@ -59,7 +59,7 @@ class TradeRequest extends BaseRequest
     /**
      * @var int 订单有效时间，以分为单位，不填默认为5分钟
      */
-    protected $validTime;
+    protected $validTime = 5;
     /**
      * @var string 分账信息
      * 格式:cusid:type:amount;cusid:type:amount…
@@ -278,6 +278,7 @@ class TradeRequest extends BaseRequest
             'paytype' => $this->getPayType(),
             'front_url' => $this->getFrontUrl(),
             'notify_url' => $this->getNotifyUrl(),
+            'validtime' => $this->getValidTime(),
         ];
         if ($this->getSubAppid()) {
             $data['sub_appid'] = $this->getSubAppid();
