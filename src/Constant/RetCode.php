@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Lmh\AllinPay\Constant;
 
 
-class ResponseCode
+class RetCode
 {
     public const SUCCESS = 'SUCCESS';
 }
