@@ -16,5 +16,9 @@ class ReturnCode
      * 交易成功
      */
     public const SUCCESS = '0000';
+    /**
+     * 该笔订单已入库，请不要重复发送
+     */
+    public const R1009 = '1009';
 
 }

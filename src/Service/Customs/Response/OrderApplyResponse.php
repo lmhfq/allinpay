@@ -34,7 +34,7 @@ class OrderApplyResponse extends BaseResponse
     public function handle(string $message)
     {
         parent::handle($message);
-        if ($this->returnCode == ReturnCode::SUCCESS) {
+        if ($this->returnCode == ReturnCode::SUCCESS || $this->returnCode == ReturnCode::R1009) {
             $this->verDept = intval(Arr::get($this->responseBody, 'VER_DEPT', 0));
         }
     }
