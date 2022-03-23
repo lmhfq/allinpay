@@ -356,7 +356,7 @@ class OrderApplyRequest extends BaseRequest
      */
     public function getGoodsFee(): int
     {
-        return $this->goodsFee;
+        return $this->goodsFee ?: 0;
     }
 
     /**
@@ -364,7 +364,7 @@ class OrderApplyRequest extends BaseRequest
      */
     public function setGoodsFee(int $goodsFee): void
     {
-        $this->goodsFee = $goodsFee;
+        $this->goodsFee = $goodsFee ?: 0;
     }
 
     /**
@@ -372,7 +372,7 @@ class OrderApplyRequest extends BaseRequest
      */
     public function getTaxFee(): int
     {
-        return $this->taxFee;
+        return $this->taxFee ?: 0;
     }
 
     /**
